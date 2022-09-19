@@ -5,9 +5,9 @@ After=network.target
 [Service]
 User=root
 Group=www-data
-WorkingDirectory=/home/root/flask_rest/
-Environment="PATH=/home/root/flask_rest/flaskvenv/bin"
-ExecStart=/home/root/flask_rest/flaskvenv/bin/gunicorn --config gunicorn_config.py wsgi:app
+WorkingDirectory=/projets/python_api/
+#Environment="PATH=/projets/python_api/flaskvenv/bin"
+ExecStart=/usr/local/bin/gunicorn --config gunicorn_config.py wsgi:app
 
 [Install]
 WantedBy=multi-user.target
