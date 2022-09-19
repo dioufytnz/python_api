@@ -7,7 +7,7 @@ User=root
 Group=www-data
 WorkingDirectory=/projets/python_api/
 #Environment="PATH=/projets/python_api/flaskvenv/bin"
-ExecStart=/usr/local/bin/gunicorn --config gunicorn_config.py wsgi:app
+ExecStart=/usr/local/bin/gunicorn --config /projets/python_api/gunicorn_config.py wsgi:app
 
 [Install]
 WantedBy=multi-user.target
