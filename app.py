@@ -1,16 +1,10 @@
-from flask import Flask, request, abort, jsonify
+# main.py
 
-app = Flask(__name__)
+from fastapi import FastAPI
 
-
-@app.route('/getSquare', methods=['POST'])
-def get_square():
-    if not request.json or 'number' not in request.json:
-        abort(400)
-    num = request.json['number']
-
-    return jsonify({'answer': num ** 2})
+app = FastAPI()
 
 
-if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8080, debug=True)
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
