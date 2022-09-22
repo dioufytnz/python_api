@@ -46,4 +46,4 @@ async def root(index, user, device, kpi, start_time, end_time):
     }
 
     result = elastic_client.search(index=index, body=body)
-    return {"message": result['hits']}
+    return {result['hits']['hits']}
