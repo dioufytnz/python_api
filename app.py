@@ -17,7 +17,7 @@ async def root(index, user, device, kpi, start_time, end_time):
                     {
                         "range": {
                             "@timestamp": {
-                                "format": "strict_date_optional_time",
+                                "format": "epoch_millis",
                                 "gte": start_time,
                                 "lte": end_time
                             }
