@@ -7,7 +7,7 @@ app = FastAPI()
 elastic_client = Elasticsearch(
     hosts=["http://localhost:9200"], http_auth=('elastic', 'eeRSORSm4RI38Np5yN1J'))
 
-@app.get("/iot/{index}/{user}/{device}/{kpi}/{start_time}/{start_time}")
+@app.get("/iot/{index}/{user}/{device}/{kpi}/{start_time}/{end_time}")
 async def root(index, user, device, kpi, start_time, end_time):
     body = {
         "query": {
