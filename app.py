@@ -7,6 +7,8 @@ app = FastAPI()
 elastic_client = Elasticsearch(
     hosts=["http://localhost:9200"], http_auth=('elastic', 'eeRSORSm4RI38Np5yN1J'))
 
+list_result = []
+
 @app.get("/iot/{index}/{user}/{device}/{kpi}/{start_time}/{end_time}")
 async def root(index, user, device, kpi, start_time, end_time):
     body = {
@@ -86,5 +88,5 @@ async def root(index, user, device, kpi, start_time, end_time):
 
     result = elastic_client.search(index=index, body=body)
     for hit in result['hits']['hits']:
-        last = hit["_source"]
-    return {"results": last}
+        list_result.append(hit["_source"])
+    return {"results": list_result}
