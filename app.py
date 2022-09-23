@@ -85,7 +85,6 @@ async def root(index, user, device, kpi, start_time, end_time):
     }
 
     result = elastic_client.search(index=index, body=body)
-    print("Got %d Hits:" % resp['hits']['total']['value'])
     for hit in result['hits']['hits']:
         last = hit["_source"]
     return {"results": last}
