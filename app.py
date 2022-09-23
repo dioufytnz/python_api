@@ -91,5 +91,7 @@ async def root(index, user, device, kpi, start_time, end_time):
     result_value['hits'] = str(result['hits']['total']['value'])
     list_result.append(result_value)
     for hit in result['hits']['hits']:
-        list_result.append(hit["_source"])
+        temp_dict = hit["_source"]
+        temp_dict['@timestamp'] = temp_dict.pop('timestamp')
+        list_result.append(temp_dict)
     return {"results": list_result}
