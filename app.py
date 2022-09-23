@@ -54,7 +54,7 @@ async def root(index, user, device, kpi, start_time, end_time):
 
 
 @app.get("/iot2/{index}/{user}/{device}/{kpi}/{start_time}/{end_time}")
-async def root(index, user, device, kpi, start_time, end_time):
+def root(index, user, device, kpi, start_time, end_time):
     body = {
         "query": {
             "bool": {
