@@ -90,10 +90,12 @@ async def root(index, user, device, kpi, start_time, end_time):
 
     result = elastic_client.search(index=index, body=body)
     result_value['hits'] = str(result['hits']['total']['value'])
-    list_result.append(result_value)
-    for hit in result['hits']['hits']:
-        temp_dict = hit["_source"]
-        temp_dict['timestamp'] = temp_dict.pop('@timestamp')
-        list_result.append(temp_dict)
-    #jsonString = json.dumps(list_result)
+    if result['hits']['total']['value'] >= 0:
+        list_result.append(result_value)
+        for hit in result['hits']['hits']:
+            temp_dict = hit["_source"]
+            temp_dict['timestamp'] = temp_dict.pop('@timestamp')
+            list_result.append(temp_dict)
+    else:
+        list_result.append(result_value)
     return list_result
