@@ -47,3 +47,42 @@ async def root(index, user, device, kpi, start_time, end_time):
 
     result = elastic_client.search(index=index, body=body)
     return {"results" : result['hits']}
+
+
+@app.get("/iot2/{index}/{user}/{device}/{kpi}/{start_time}/{end_time}")
+async def root(index, user, device, kpi, start_time, end_time):
+    body = {
+        "query": {
+            "bool": {
+                "filter": [
+                    {
+                        "range": {
+                            "@timestamp": {
+                                "format": "epoch_millis",
+                                "gte": start_time,
+                                "lte": end_time
+                            }
+                        }
+                    },
+                    {
+                        "match_phrase": {
+                            "device": device
+                        }
+                    },
+                    {
+                        "match_phrase": {
+                            "user": user
+                        }
+                    },
+                    {
+                        "match_phrase": {
+                            "kpi": kpi
+                        }
+                    }
+                ]
+            }
+        }
+    }
+
+    result = elastic_client.search(index=index, body=body)
+    return {"results": result['_source']}
