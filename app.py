@@ -8,6 +8,7 @@ elastic_client = Elasticsearch(
     hosts=["http://localhost:9200"], http_auth=('elastic', 'eeRSORSm4RI38Np5yN1J'))
 
 list_result = []
+result_value = {}
 
 @app.get("/iot/{index}/{user}/{device}/{kpi}/{start_time}/{end_time}")
 async def root(index, user, device, kpi, start_time, end_time):
@@ -87,7 +88,7 @@ async def root(index, user, device, kpi, start_time, end_time):
     }
 
     result = elastic_client.search(index=index, body=body)
-    result_value = "\"hits\": \"" + str(result['hits']['total']['value']) + "\""
+    result_value['hits'] = str(result['hits']['total']['value'])
     list_result.append(result_value)
     for hit in result['hits']['hits']:
         list_result.append(hit["_source"])
