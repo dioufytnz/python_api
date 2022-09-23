@@ -95,5 +95,5 @@ async def root(index, user, device, kpi, start_time, end_time):
         temp_dict = hit["_source"]
         temp_dict['timestamp'] = temp_dict.pop('@timestamp')
         list_result.append(temp_dict)
-    jsonString = json.dumps(list_result)
-    return jsonString
+    #jsonString = json.dumps(list_result)
+    return list_result
