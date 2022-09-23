@@ -87,7 +87,7 @@ async def root(index, user, device, kpi, start_time, end_time):
     }
 
     result = elastic_client.search(index=index, body=body)
-    list_result.append("\"hits\": \"" + result['hits']['total']['value'] + "\"")
+    list_result.append("\"hits\": \"" + str(result['hits']['total']['value']) + "\"")
     for hit in result['hits']['hits']:
         list_result.append(hit["_source"])
     return {"results": list_result}
