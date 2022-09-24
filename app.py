@@ -11,46 +11,46 @@ elastic_client = Elasticsearch(
 list_result = []
 result_value = {}
 
-# @app.get("/iot/{index}/{user}/{device}/{kpi}/{start_time}/{end_time}")
-# async def root(index, user, device, kpi, start_time, end_time):
-#     body = {
-#         "query": {
-#             "bool": {
-#                 "must": [],
-#                 "filter": [
-#                     {
-#                         "range": {
-#                             "@timestamp": {
-#                                 "format": "epoch_millis",
-#                                 "gte": start_time,
-#                                 "lte": end_time
-#                             }
-#                         }
-#                     },
-#                     {
-#                         "match_phrase": {
-#                             "device": device
-#                         }
-#                     },
-#                     {
-#                         "match_phrase": {
-#                             "user": user
-#                         }
-#                     },
-#                     {
-#                         "match_phrase": {
-#                             "kpi": kpi
-#                         }
-#                     }
-#                 ],
-#                 "should": [],
-#                 "must_not": []
-#             }
-#         }
-#     }
+@app.get("/iot/{index}/{user}/{device}/{kpi}/{start_time}/{end_time}")
+async def root(index, user, device, kpi, start_time, end_time):
+    body = {
+        "query": {
+            "bool": {
+                "must": [],
+                "filter": [
+                    {
+                        "range": {
+                            "@timestamp": {
+                                "format": "epoch_millis",
+                                "gte": start_time,
+                                "lte": end_time
+                            }
+                        }
+                    },
+                    {
+                        "match_phrase": {
+                            "device": device
+                        }
+                    },
+                    {
+                        "match_phrase": {
+                            "user": user
+                        }
+                    },
+                    {
+                        "match_phrase": {
+                            "kpi": kpi
+                        }
+                    }
+                ],
+                "should": [],
+                "must_not": []
+            }
+        }
+    }
 
-#     result = elastic_client.search(index=index, body=body)
-#     return {"results" : result['hits']}
+    result = elastic_client.search(index=index, body=body)
+    return {"results" : result['hits']}
 
 
 @app.get("/iot2/{index}/{user}/{device}/{kpi}/{start_time}/{end_time}")
