@@ -89,7 +89,7 @@ async def root2(index, user, device, kpi, start_time, end_time):
             }
         }
     }
-    result = elastic_client.search(index=index, body=body)
+    result = await elastic_client.search(index=index, body=body)
     result_value['hits'] = str(result['hits']['total']['value'])
     if result['hits']['total']['value'] >= 0:
         list_result.append(result_value)
@@ -101,3 +101,8 @@ async def root2(index, user, device, kpi, start_time, end_time):
         list_result.append(result_value)
         print('result')
     return list_result
+
+
+@app.get("/iot3/{index}/{user}/{device}/{kpi}/{start_time}/{end_time}")
+async def root3(index, user, device, kpi, start_time, end_time):
+    return {"return : " + index + user + device + kpi + start_time + end_time}
