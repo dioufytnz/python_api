@@ -11,6 +11,7 @@ elastic_client = Elasticsearch(
 list_result = []
 result_value = {}
 
+
 @app.get("/iot/{index}/{user}/{device}/{kpi}/{start_time}/{end_time}")
 async def root(index, user, device, kpi, start_time, end_time):
     body = {
@@ -50,7 +51,6 @@ async def root(index, user, device, kpi, start_time, end_time):
     }
 
     result = elastic_client.search(index=index, body=body)
-    elastic_client.transport.close()
     return {"results" : result['hits']}
 
 
@@ -88,9 +88,7 @@ async def root2(index, user, device, kpi, start_time, end_time):
             }
         }
     }
-
     result = elastic_client.search(index=index, body=body)
-    elastic_client.transport.close()
     result_value['hits'] = str(result['hits']['total']['value'])
     if result['hits']['total']['value'] >= 0:
         list_result.append(result_value)
