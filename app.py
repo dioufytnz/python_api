@@ -8,10 +8,6 @@ app = FastAPI()
 elastic_client = Elasticsearch(
     hosts=["http://localhost:9200"], http_auth=('elastic', 'eeRSORSm4RI38Np5yN1J'))
 
-list_result_tmp = []
-list_result = []
-result_value = {}
-
 
 @app.get("/iot/{index}/{user}/{device}/{kpi}/{start_time}/{end_time}")
 async def root(index, user, device, kpi, start_time, end_time):
@@ -57,6 +53,8 @@ async def root(index, user, device, kpi, start_time, end_time):
 
 @app.get("/iot2/{index}/{user}/{device}/{kpi}/{start_time}/{end_time}")
 async def root2(index, user, device, kpi, start_time, end_time):
+    list_result = []
+    result_value = {}
     body = {
         "query": {
             "bool": {
@@ -89,7 +87,7 @@ async def root2(index, user, device, kpi, start_time, end_time):
             }
         }
     }
-    result = await elastic_client.search(index=index, body=body)
+    result = elastic_client.search(index=index, body=body)
     result_value['hits'] = str(result['hits']['total']['value'])
     if result['hits']['total']['value'] >= 0:
         list_result.append(result_value)
@@ -99,10 +97,13 @@ async def root2(index, user, device, kpi, start_time, end_time):
             list_result.append(temp_dict)
     else:
         list_result.append(result_value)
-        print('result')
+
+    result
     return list_result
 
 
 @app.get("/iot3/{index}/{user}/{device}/{kpi}/{start_time}/{end_time}")
 async def root3(index, user, device, kpi, start_time, end_time):
     return {"return : " + index + user + device + kpi + start_time + end_time}
+
+
